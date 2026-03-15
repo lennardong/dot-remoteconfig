@@ -1,8 +1,8 @@
-# fzf — fuzzy finder
+# fzf — fuzzy finder (installed via ~/.fzf)
 # keybindings: Ctrl-R (history), Ctrl-T (files), Alt-C (cd)
-source /usr/share/doc/fzf/examples/key-bindings.bash
-# **<tab> completion
-eval "$(fzf --bash 2>/dev/null)" || source /usr/share/bash-completion/completions/fzf
+# **<tab> fuzzy path completion
+export PATH="$HOME/.fzf/bin:$PATH"
+eval "$(fzf --bash)"
 
 # use fd as file source (fast, respects .gitignore)
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude .git'
