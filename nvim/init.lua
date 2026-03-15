@@ -2,7 +2,18 @@
 -- Full config lives on Mac; this ensures CR works in VS Code over WSL
 
 -- OSC 52 clipboard over SSH — yanks propagate to local macOS clipboard
--- Nvim 0.11+ auto-detects OSC 52; just set the clipboard register
+-- Explicit provider so it works even when auto-detection fails (tmux, mosh, etc.)
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+  },
+}
 vim.o.clipboard = "unnamedplus"
 
 if vim.g.vscode then
