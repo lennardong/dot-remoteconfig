@@ -1,0 +1,14 @@
+" OSC 52 clipboard over SSH — yanks propagate to local macOS clipboard
+" Works with iTerm2, Ghostty, Kitty, WezTerm, Alacritty
+
+function! OscYank(text) abort
+  let encoded = system('printf ' . shellescape(a:text) . ' | base64 | tr -d "\n"')
+  let osc = "\e]52;c;" . encoded . "\a"
+  silent exe '!printf ' . shellescape(osc) . ' > /dev/tty'
+  redraw!
+endfunction
+
+augroup OscYankGroup
+  autocmd!
+  autocmd TextYankPost * if v:event.operator ==# 'y' | call OscYank(join(v:event.regcontents, "\n")) | endif
+augroup END
