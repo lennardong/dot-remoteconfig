@@ -6,6 +6,9 @@ vim.opt.relativenumber = true
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.scrolloff = 8
 vim.opt.wrap = true
+vim.opt.linebreak = true         -- wrap at word boundaries, not mid-word
+vim.opt.breakindent = true       -- visually indent wrapped lines
+vim.opt.breakindentopt = "shift:4"  -- 4-space offset for wrapped continuation
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.swapfile = false
