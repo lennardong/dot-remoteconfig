@@ -46,6 +46,15 @@ vim.keymap.set("n", "<leader>vw", vscode_notify("workbench.action.focusActiveEdi
 vim.keymap.set("n", "<leader>ff", vscode_notify("workbench.action.quickOpen"))
 vim.keymap.set("n", "<leader>fw", vscode_notify("workbench.action.findInFiles"))
 
+-- Hide neovim statusline in VSCode
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.defer_fn(function()
+      vim.api.nvim_set_option("laststatus", 0)
+    end, 100)
+  end,
+})
+
 -- Auto-save on buffer leave / focus lost
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
   pattern = "*",

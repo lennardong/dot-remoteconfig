@@ -1,19 +1,21 @@
--- Remote WSL neovim config
--- Based on full dotfiles setup, with OSC 52 clipboard for SSH/tmux
+-- Neovim config — VSCode integration + terminal IDE
+-- Works on macOS (native clipboard) and remote/SSH (OSC 52 passthrough)
 
 -- OSC 52 clipboard over SSH — yanks propagate to local macOS clipboard
--- Explicit provider so it works even when auto-detection fails (tmux, mosh, etc.)
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-  },
-  paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-  },
-}
+-- Gated: macOS uses native clipboard; SSH/tmux uses explicit OSC 52 provider
+if vim.env.SSH_TTY then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+end
 
 require("config.options")
 
