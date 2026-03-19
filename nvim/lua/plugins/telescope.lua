@@ -12,6 +12,7 @@ return {
 
     telescope.setup({
       defaults = {
+        path_display = { "truncate" },
         file_ignore_patterns = {
           -- dependency / env dirs
           "%.venv/", "%.git/", "node_modules/",

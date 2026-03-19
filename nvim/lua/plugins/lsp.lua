@@ -7,7 +7,8 @@ return {
     vim.lsp.config("ruff", {
       capabilities = { general = { positionEncodings = { "utf-16" } } },
     })
-    vim.lsp.enable({ "basedpyright", "ruff" })
+    vim.lsp.config("marksman", {})
+    vim.lsp.enable({ "basedpyright", "ruff", "marksman" })
 
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)

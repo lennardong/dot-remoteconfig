@@ -10,6 +10,14 @@ if ! command -v nvim &>/dev/null; then
   sudo apt update --quiet && sudo apt install --yes neovim
 fi
 
+# install marksman (markdown LSP) if missing
+if ! command -v marksman &>/dev/null; then
+  echo "installing marksman..."
+  MARKSMAN_URL="https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64"
+  sudo curl -fsSL "$MARKSMAN_URL" -o /usr/local/bin/marksman
+  sudo chmod +x /usr/local/bin/marksman
+fi
+
 # build tools needed by telescope-fzf-native
 if ! command -v make &>/dev/null; then
   echo "installing build-essential (needed by telescope-fzf-native)..."
