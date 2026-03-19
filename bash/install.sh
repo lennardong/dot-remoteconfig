@@ -41,6 +41,12 @@ if command -v batcat &>/dev/null && ! command -v bat &>/dev/null; then
   echo "bash: symlinked batcat -> bat"
 fi
 
+# install trash-cli if missing
+if ! command -v trash-put &>/dev/null; then
+  echo "installing trash-cli..."
+  sudo apt update --quiet && sudo apt install --yes trash-cli
+fi
+
 # install ripgrep if missing
 if ! command -v rg &>/dev/null; then
   echo "installing ripgrep..."
