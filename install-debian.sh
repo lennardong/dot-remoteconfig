@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "=== config-remote install ==="
+echo "=== config-remote install (Debian/Ubuntu) ==="
 
 # check for ghostty terminfo
 if ! infocmp xterm-ghostty &>/dev/null; then
@@ -17,19 +17,19 @@ fi
 
 echo ""
 echo "--- bash ---"
-"$SCRIPT_DIR/bash/install.sh"
+"$SCRIPT_DIR/bash/install-debian.sh"
 
 echo ""
 echo "--- tmux ---"
-"$SCRIPT_DIR/tmux/install.sh"
+"$SCRIPT_DIR/tmux/install-debian.sh"
 
 echo ""
 echo "--- nvim ---"
-"$SCRIPT_DIR/nvim/install.sh"
+"$SCRIPT_DIR/nvim/install-debian.sh"
 
 echo ""
 echo "--- vim ---"
-"$SCRIPT_DIR/vim/install.sh"
+"$SCRIPT_DIR/vim/install-debian.sh"
 
 echo ""
 echo "=== done ==="
