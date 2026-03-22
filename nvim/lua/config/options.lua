@@ -11,6 +11,7 @@ vim.opt.breakindent = true       -- visually indent wrapped lines
 vim.opt.breakindentopt = "shift:4"  -- 4-space offset for wrapped continuation
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.autowriteall = true      -- save on buffer switch, :quit, etc.
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true  -- persistent undo is a better safety net than swap
