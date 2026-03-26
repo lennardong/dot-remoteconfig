@@ -18,6 +18,7 @@ if vim.env.SSH_TTY then
 end
 
 require("config.options")
+require("config.keymaps")
 
 if vim.g.vscode then
   require("config.vscode")
