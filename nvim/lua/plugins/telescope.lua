@@ -41,6 +41,6 @@ return {
     { "<leader>cp", "<cmd>Telescope commands<cr>",               desc = "Command Palette" },
     { "gr",          "<cmd>Telescope lsp_references<cr>",         desc = "References" },
     { "<leader>ds",  "<cmd>Telescope lsp_document_symbols<cr>",   desc = "Document Symbols" },
-    { "<leader>ws",  "<cmd>Telescope lsp_workspace_symbols<cr>",  desc = "Workspace Symbols" },
+    { "<leader>ws",  "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",  desc = "Workspace Symbols" },
   },
 }
