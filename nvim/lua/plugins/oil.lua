@@ -3,5 +3,7 @@ return {
   keys = {
     { "<leader>e", "<cmd>Oil<cr>", desc = "File Explorer" },
   },
-  opts = {},
+  opts = {
+    default_file_explorer = false,
+  },
 }
