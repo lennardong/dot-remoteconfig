@@ -10,6 +10,9 @@ if ! command -v tmux &>/dev/null; then
   sudo apt update --quiet && sudo apt install --yes tmux
 fi
 
+# ensure sessionizer is executable
+chmod +x "$SCRIPT_DIR/tmux-sessionizer"
+
 # symlink tmux.conf
 if [ -L "$TARGET" ] && [ "$(readlink "$TARGET")" = "$SCRIPT_DIR/tmux.conf" ]; then
   echo "tmux: symlink already in place"
