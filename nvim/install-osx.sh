@@ -20,7 +20,12 @@ fi
 echo "installing LSP servers..."
 uv tool install basedpyright
 uv tool install ruff
-uv tool install marksman
+
+# marksman is a .NET binary, not a Python package
+if ! command -v marksman &>/dev/null; then
+  echo "installing marksman..."
+  brew install marksman
+fi
 
 # build tools needed by telescope-fzf-native
 if ! command -v make &>/dev/null; then
