@@ -23,6 +23,11 @@ return {
           client.server_capabilities.hoverProvider = false
         end
 
+        -- enable inlay type hints when supported
+        if client and client:supports_method("textDocument/inlayHint") then
+          vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+        end
+
         local map = function(keys, func, desc)
           vim.keymap.set("n", keys, func, { buffer = args.buf, desc = desc })
         end
@@ -31,6 +36,9 @@ return {
         map("gh", vim.lsp.buf.hover, "Hover Docs")
         map("<leader>rs", vim.lsp.buf.rename, "Rename Symbol")
         map("<leader>ds", "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols")
+        map("<leader>th", function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }), { bufnr = args.buf })
+        end, "Toggle Inlay Hints")
       end,
     })
   end,
