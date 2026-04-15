@@ -1,3 +1,6 @@
+-- Formatting: auto-format on save via external formatters
+-- ruff for Python (format + import sorting), mdformat for Markdown
+-- Falls back to LSP formatting if no formatter configured for a filetype
 return {
   "stevearc/conform.nvim",
   event = "BufWritePre",

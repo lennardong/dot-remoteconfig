@@ -1,3 +1,8 @@
+-- Fuzzy finder: files, grep, buffers, LSP symbols
+-- <leader>ff: git_files (falls back to find_files outside a repo)
+-- <leader>fw: live grep scoped to git root
+-- <leader>fp: switch project (fd sibling dirs, cd on select)
+-- Uses fzf-native for faster sorting; ignores .venv, __pycache__, .parquet, etc.
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {

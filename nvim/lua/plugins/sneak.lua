@@ -1,3 +1,6 @@
+-- Motion: two-character search with labels (like easymotion but lighter)
+-- s{char}{char} to jump; label mode shows targets when multiple matches
+-- Overrides n/N to repeat sneak instead of / search; cl preserves original s
 return {
   "justinmk/vim-sneak",
   event = "VeryLazy",

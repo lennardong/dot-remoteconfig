@@ -1,3 +1,6 @@
+-- Completion: inline suggestions from LSP, paths, and buffer words
+-- blink.cmp over nvim-cmp: faster (Rust fuzzy matcher), simpler config
+-- Tab to accept, C-space to trigger manually, Up/Down to navigate
 return {
   "saghen/blink.cmp",
   version = "1.*",

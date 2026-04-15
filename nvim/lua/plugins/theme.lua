@@ -1,3 +1,5 @@
+-- Theme: Dracula colorscheme with cursorline
+-- Loaded first (priority 1000) so other plugins inherit highlight groups
 return {
   "Mofiqul/dracula.nvim",
   lazy = false,

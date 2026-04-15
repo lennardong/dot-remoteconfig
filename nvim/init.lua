@@ -20,9 +20,14 @@ end
 require("config.options")
 require("config.keymaps")
 
+if not vim.g.vscode then
+	require("config.filewatcher")
+end
+
 if vim.g.vscode then
   require("config.vscode")
 end
+
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -50,4 +55,5 @@ require("lazy").setup({
   not vim.g.vscode and { import = "plugins.oil" }         or nil,
   not vim.g.vscode and { import = "plugins.whichkey" }    or nil,
   not vim.g.vscode and { import = "plugins.render-markdown" } or nil,
+  not vim.g.vscode and { import = "plugins.autopairs" }        or nil,
 })

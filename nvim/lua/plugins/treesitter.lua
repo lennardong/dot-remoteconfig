@@ -1,3 +1,5 @@
+-- Treesitter: syntax-aware highlighting, indentation, and text objects
+-- Parsers auto-installed for Python, Lua, Bash, config formats, and Markdown
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
