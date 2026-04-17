@@ -4,8 +4,8 @@
 vim.keymap.set("n", "<C-w>e", "<C-w>=", { desc = "Equalize splits" })
 
 -- Splits — symmetric with tmux prefix \/-
-vim.keymap.set("n", "<C-w>\\", "<cmd>vsplit<cr>", { desc = "Vertical split" })
-vim.keymap.set("n", "<C-w>-", "<cmd>split<cr>", { desc = "Horizontal split" })
+vim.keymap.set("n", "<C-w>\\", "<cmd>vsplit<cr><C-w>l", { desc = "Vertical split" })
+vim.keymap.set("n", "<C-w>-", "<cmd>split<cr><C-w>j", { desc = "Horizontal split" })
 
 -- Sessionizer — switch tmux session to another repo
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config-remote/tmux/tmux-sessionizer<CR>")
@@ -18,6 +18,7 @@ vim.keymap.set("n", "<leader>tt", function()
   else
     vim.cmd("colorscheme dracula")
   end
+  if _G.apply_cursor then _G.apply_cursor(vim.g.colors_name) end
 end, { desc = "Toggle dark/light theme" })
 
 -- Yank selection with file path + line numbers (for pasting into Claude Code)
