@@ -26,6 +26,16 @@ w:start(root, { recursive = true }, function(err, filename)
   end)
 end)
 
+-- When disk changes AND buffer is dirty, skip W12 prompt — reload and notify.
+-- Safe for Claude Code / aider workflows where external writes are intentional.
+vim.api.nvim_create_autocmd("FileChangedShell", {
+  pattern = "*",
+  callback = function()
+    vim.v.fcs_choice = "reload"
+    vim.notify("Reloaded (external edit): " .. vim.fn.expand("<afile>:t"), vim.log.levels.WARN)
+  end,
+})
+
 -- Cleanup on exit
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = function()
