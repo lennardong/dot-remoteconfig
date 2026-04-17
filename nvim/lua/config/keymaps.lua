@@ -10,6 +10,16 @@ vim.keymap.set("n", "<C-w>-", "<cmd>split<cr>", { desc = "Horizontal split" })
 -- Sessionizer — switch tmux session to another repo
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config-remote/tmux/tmux-sessionizer<CR>")
 
+-- Theme toggle dark/light
+vim.keymap.set("n", "<leader>tt", function()
+  local current = vim.g.colors_name
+  if current == "dracula" then
+    vim.cmd("colorscheme github_light")
+  else
+    vim.cmd("colorscheme dracula")
+  end
+end, { desc = "Toggle dark/light theme" })
+
 -- Yank selection with file path + line numbers (for pasting into Claude Code)
 vim.keymap.set("v", "<leader>yp", function()
   local start_line = vim.fn.line("v")
