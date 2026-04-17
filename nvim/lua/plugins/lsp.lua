@@ -5,8 +5,38 @@
 return {
   "neovim/nvim-lspconfig",
   config = function()
+    -- basedpyright returns inlay hint positions that exceed line length,
+    -- causing nvim_buf_set_extmark to error. Clamp columns to line length.
+    local orig_inlay = vim.lsp.handlers["textDocument/inlayHint"]
+    vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx, config)
+      if result then
+        local lines = vim.api.nvim_buf_get_lines(ctx.bufnr, 0, -1, false)
+        for _, hint in ipairs(result) do
+          local line = hint.position.line
+          local col = hint.position.character
+          local line_len = lines[line + 1] and #lines[line + 1] or 0
+          if col > line_len then
+            hint.position.character = line_len
+          end
+        end
+      end
+      orig_inlay(err, result, ctx, config)
+    end
+
     vim.lsp.config("basedpyright", {
       capabilities = { general = { positionEncodings = { "utf-16" } } },
+      settings = {
+        basedpyright = {
+          analysis = {
+            inlayHints = {
+              variableTypes = false,
+              callArgumentNames = true,
+              functionReturnTypes = true,
+              genericTypes = false,
+            },
+          },
+        },
+      },
     })
     vim.lsp.config("ruff", {
       capabilities = { general = { positionEncodings = { "utf-16" } } },
