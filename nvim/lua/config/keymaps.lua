@@ -18,7 +18,7 @@ vim.keymap.set("n", "<leader>tt", function()
   else
     vim.cmd("colorscheme dracula")
   end
-  if _G.apply_cursor then _G.apply_cursor(vim.g.colors_name) end
+  if _G.apply_cursor then _G.apply_cursor() end
 end, { desc = "Toggle dark/light theme" })
 
 -- Yank selection with file path + line numbers (for pasting into Claude Code)
