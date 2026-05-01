@@ -27,6 +27,8 @@ return {
           "%.parquet", "%.pyc", "%.pyo",
           -- lock and system files
           "uv%.lock", "%.DS_Store",
+          -- google drive temp files
+          "%.tmp%.driveupload/", "%.tmp%.drivedownload/",
         },
       },
       extensions = {
