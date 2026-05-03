@@ -2,6 +2,7 @@
 -- Parsers auto-installed for Python, Lua, Bash, config formats, and Markdown
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   build = ":TSUpdate",
   config = function()
     require("nvim-treesitter").setup({
