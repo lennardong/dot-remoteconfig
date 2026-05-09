@@ -1,6 +1,6 @@
--- LSP: language server configs for Python and Markdown
+-- LSP: language server configs for Python
 -- basedpyright for type checking, ruff for linting (hover disabled to avoid conflicts)
--- marksman for Markdown link/heading navigation
+-- Markdown handled by conform (mdformat) + render-markdown + treesitter — no LSP needed
 -- Uses nvim 0.11+ vim.lsp.config/enable pattern (no mason, no lsp-zero)
 return {
   "neovim/nvim-lspconfig",
@@ -41,8 +41,7 @@ return {
     vim.lsp.config("ruff", {
       capabilities = { general = { positionEncodings = { "utf-16" } } },
     })
-    vim.lsp.config("marksman", {})
-    vim.lsp.enable({ "basedpyright", "ruff", "marksman" })
+    vim.lsp.enable({ "basedpyright", "ruff" })
 
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
