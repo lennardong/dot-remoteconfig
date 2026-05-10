@@ -50,7 +50,7 @@ vim.keymap.set("n", "<leader>fw", vscode_notify("workbench.action.findInFiles"))
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     vim.defer_fn(function()
-      vim.api.nvim_set_option("laststatus", 0)
+      vim.o.laststatus = 0
     end, 100)
   end,
 })
