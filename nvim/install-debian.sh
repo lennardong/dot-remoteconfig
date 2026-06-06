@@ -5,10 +5,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NVIM_CONFIG="$HOME/.config/nvim"
 NVIM_MIN="0.11"   # config uses the vim.lsp.config/enable API (Nvim 0.11+)
 
-# Architecture → release asset suffixes
+# Architecture → release asset suffixes.
+# nvim uses x86_64/arm64; marksman + tree-sitter use x64/arm64.
 case "$(uname -m)" in
-  aarch64|arm64) NVIM_ARCH="arm64";  MARKSMAN_ARCH="arm64" ;;
-  x86_64|amd64)  NVIM_ARCH="x86_64"; MARKSMAN_ARCH="x64" ;;
+  aarch64|arm64) NVIM_ARCH="arm64";  CLI_ARCH="arm64" ;;
+  x86_64|amd64)  NVIM_ARCH="x86_64"; CLI_ARCH="x64" ;;
   *) echo "unsupported architecture: $(uname -m)"; exit 1 ;;
 esac
 
@@ -46,10 +47,20 @@ fi
 
 # marksman (markdown LSP) if missing
 if ! command -v marksman &>/dev/null; then
-  echo "installing marksman (linux-${MARKSMAN_ARCH})..."
-  MARKSMAN_URL="https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-${MARKSMAN_ARCH}"
+  echo "installing marksman (linux-${CLI_ARCH})..."
+  MARKSMAN_URL="https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-${CLI_ARCH}"
   sudo curl -fsSL "$MARKSMAN_URL" -o /usr/local/bin/marksman
   sudo chmod +x /usr/local/bin/marksman
+fi
+
+# tree-sitter CLI — required by nvim-treesitter's `main` branch to build parsers
+# (the old `master` branch only needed a C compiler; the rewrite shells out to it)
+if ! command -v tree-sitter &>/dev/null; then
+  echo "installing tree-sitter CLI (linux-${CLI_ARCH})..."
+  curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${CLI_ARCH}.gz" -o /tmp/tree-sitter.gz
+  gunzip -f /tmp/tree-sitter.gz
+  sudo install -m 755 /tmp/tree-sitter /usr/local/bin/tree-sitter
+  rm -f /tmp/tree-sitter
 fi
 
 # build tools needed by telescope-fzf-native
