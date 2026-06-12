@@ -4,8 +4,8 @@ return {
   "levouh/tint.nvim",
   config = function()
     require("tint").setup({
-      tint = -50,
-      saturation = 0.2,
+      tint = -20,
+      saturation = 0.7,
     })
   end,
 }
