@@ -37,3 +37,8 @@ apply_split_highlights()
 
 -- Diagnostics: show virtual line only for current line (nvim 0.11+)
 vim.diagnostic.config({ virtual_lines = { current_line = true } })
+
+-- Always-equal splits: equalalways handles open/close; VimResized handles
+-- terminal resize (nvim scales proportionally otherwise).
+vim.o.equalalways = true
+vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
