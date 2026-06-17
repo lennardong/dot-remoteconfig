@@ -1,13 +1,9 @@
--- Match tmux's inactive pane background across ALL splits.
+-- Match tmux's inactive pane background across all splits.
 --
 -- tmux paints unfocused panes 'bg=colour235' (tmux.conf), but nvim draws its own
 -- Normal bg over the whole pane so tmux can't show through. We listen for tmux
--- focus events (focus-events on) and repaint nvim ourselves.
---
--- tint.nvim moves every window onto its own highlight namespace, so a plain
--- nvim_set_hl(0, ...) is invisible. We therefore tint.disable() on focus loss
--- (reverts all windows to namespace 0), paint Normal/NormalNC = colour235, then
--- re-enable tint on focus gain so inactive splits dim again while focused.
+-- focus events (focus-events on) and repaint nvim ourselves: on focus loss every
+-- split goes to colour235, on focus gain the colorscheme bg is restored.
 
 local INACTIVE_BG = "#262626" -- xterm colour235, matches tmux window-style
 
@@ -22,7 +18,6 @@ local function capture()
 end
 
 local function dim()
-  pcall(function() require("tint").disable() end)
   for _, g in ipairs({ "Normal", "NormalNC" }) do
     vim.api.nvim_set_hl(0, g, { fg = (saved[g] or {}).fg, bg = INACTIVE_BG })
   end
@@ -32,7 +27,6 @@ local function undim()
   for _, g in ipairs({ "Normal", "NormalNC" }) do
     if saved[g] then vim.api.nvim_set_hl(0, g, { fg = saved[g].fg, bg = saved[g].bg }) end
   end
-  pcall(function() require("tint").enable() end)
 end
 
 local group = vim.api.nvim_create_augroup("DimPaneOnTmuxFocus", { clear = true })
