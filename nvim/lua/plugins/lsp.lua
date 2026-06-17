@@ -43,10 +43,9 @@ return {
           vim.keymap.set("n", keys, func, { buffer = args.buf, desc = desc })
         end
         map("gd", vim.lsp.buf.definition, "Definition")
-        map("gr", vim.lsp.buf.references, "References")
         map("gh", vim.lsp.buf.hover, "Hover Docs")
         map("<leader>rs", vim.lsp.buf.rename, "Rename Symbol")
-        map("<leader>ds", "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols")
+        -- gr, <leader>ds: owned globally by telescope.lua
         map("<leader>th", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }), { bufnr = args.buf })
         end, "Toggle Inlay Hints")
