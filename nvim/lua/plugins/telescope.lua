@@ -11,7 +11,6 @@ return {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
     },
-    "nvim-telescope/telescope-file-browser.nvim",
   },
   config = function()
     local telescope = require("telescope")
@@ -41,7 +40,6 @@ return {
       },
     })
     telescope.load_extension("fzf")
-    telescope.load_extension("file_browser")
   end,
   keys = {
     {
@@ -87,7 +85,6 @@ return {
       desc = "Switch Project",
     },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                desc = "Buffers" },
-    { "<leader>fe", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>", desc = "File Browser" },
     {
       "<leader>fc",
       function()
