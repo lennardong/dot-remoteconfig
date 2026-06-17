@@ -9,5 +9,13 @@ return {
   },
   opts = {
     default_file_explorer = false,
+    -- Free C-h/C-l for vim-tmux-navigator (oil defaults them to hsplit/refresh).
+    -- Open-in-split moves to C-\ to match the \ = side-by-side convention
+    -- (<C-w>\, tmux \). Merged over oil's defaults (use_default_keymaps stays on).
+    keymaps = {
+      ["<C-h>"] = false,
+      ["<C-l>"] = false,
+      ["<C-\\>"] = { "actions.select", opts = { vertical = true } },
+    },
   },
 }
