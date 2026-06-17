@@ -22,6 +22,7 @@ require("config.keymaps")
 
 if not vim.g.vscode then
 	require("config.filewatcher")
+	require("config.dimpane")
 end
 
 if vim.g.vscode then
