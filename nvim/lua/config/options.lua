@@ -3,6 +3,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.relativenumber = true
+vim.opt.mouse = ""               -- disable mouse — keyboard-only, mirrors tmux mouse off
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.scrolloff = 8
 vim.opt.wrap = true
