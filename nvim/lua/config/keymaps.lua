@@ -7,14 +7,8 @@ vim.keymap.set("n", "<C-w>e", "<C-w>=", { desc = "Equalize splits" })
 vim.keymap.set("n", "<C-w>\\", "<cmd>vsplit<cr>", { desc = "Vertical split" })
 vim.keymap.set("n", "<C-w>-", "<cmd>split<cr>", { desc = "Horizontal split" })
 
--- Split navigation — terminal only (VSCode owns its own). Native nvim window nav,
--- no tmux crossover: at an edge it stays put. tmux panes use prefix-q numbers.
-if not vim.g.vscode then
-  vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
-  vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower split" })
-  vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper split" })
-  vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
-end
+-- C-h/j/k/l split+pane navigation: owned by vim-tmux-navigator (plugins/tmux-navigator.lua),
+-- which crosses the nvim/tmux boundary. tmux side: is_vim check in tmux.conf.
 
 -- Worktree workspace — open current repo as one session, one window per worktree
 vim.keymap.set("n", "<C-f>", "<cmd>silent !~/.config-remote/tmux/tmux-worktree<CR>")
