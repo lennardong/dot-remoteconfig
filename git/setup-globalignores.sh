@@ -10,6 +10,8 @@ touch "$ignore"
 patterns=(
   '**/.claude/settings.local.json'   # Claude Code per-project local settings
   '.worktrees/'                      # in-repo git worktrees (our convention)
+  '.DS_Store'                        # macOS directory litter
+  '*~'                               # editor/shell backup files
 )
 
 for p in "${patterns[@]}"; do
