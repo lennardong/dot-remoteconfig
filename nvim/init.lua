@@ -52,6 +52,7 @@ require("lazy").setup({
   not vim.g.vscode and { import = "plugins.treesitter" }  or nil,
   not vim.g.vscode and { import = "plugins.blink" }       or nil,
   not vim.g.vscode and { import = "plugins.conform" }     or nil,
+  not vim.g.vscode and { import = "plugins.icons" }       or nil,
   not vim.g.vscode and { import = "plugins.oil" }         or nil,
   not vim.g.vscode and { import = "plugins.whichkey" }    or nil,
   not vim.g.vscode and { import = "plugins.render-markdown" } or nil,

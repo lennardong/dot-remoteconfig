@@ -5,6 +5,7 @@
   "dracula.nvim": { "branch": "main", "commit": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee" },
   "github-nvim-theme": { "branch": "main", "commit": "c106c9472154d6b2c74b74565616b877ae8ed31d" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
+  "mini.icons": { "branch": "main", "commit": "e56797f90192d81f1fda02e662fc3e8e3d775027" },
   "mini.pairs": { "branch": "main", "commit": "4a014143fcb4e9df26198ccb3ecff3b9e77a048c" },
   "nvim-lspconfig": { "branch": "master", "commit": "bfcc0171a43f22afa61d927ffe9fcb6cb85dc99e" },
   "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },

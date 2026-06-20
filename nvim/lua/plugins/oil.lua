@@ -3,6 +3,7 @@
 -- <leader>e to open; not set as default explorer (netrw still handles gx links)
 return {
   "stevearc/oil.nvim",
+  dependencies = { "echasnovski/mini.icons" },
   keys = {
     { "<leader>e", "<cmd>Oil<cr>", desc = "File Explorer" },
     { "<leader>fe", "<cmd>Oil<cr>", desc = "File Explorer" },

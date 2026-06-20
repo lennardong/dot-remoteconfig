@@ -4,7 +4,7 @@
 -- Terminal-only (gated off in VSCode, which has its own diff UI).
 return {
   "sindrets/diffview.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = { "nvim-lua/plenary.nvim", "echasnovski/mini.icons" },
   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory", "DiffviewToggleFiles" },
   keys = {
     { "<leader>gd", "<cmd>DiffviewOpen<cr>",          desc = "Diff working tree" },
@@ -25,11 +25,11 @@ return {
     { "<leader>gc", "<cmd>DiffviewClose<cr>",         desc = "Close diff" },
   },
   -- enhanced_diff_hl: word-level highlight inside changed lines.
-  -- use_icons=false: text-only panel, skips nvim-web-devicons dep (icons are cosmetic).
+  -- use_icons=true: file-type icons in the panel via mini.icons' devicons shim.
   -- listing_style="list": flat file panel, no directory tree.
   opts = {
     enhanced_diff_hl = true,
-    use_icons = false,
+    use_icons = true,
     file_panel = { listing_style = "list" },
   },
 }
