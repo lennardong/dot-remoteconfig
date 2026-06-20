@@ -1,6 +1,36 @@
-" OSC 52 clipboard over SSH — yanks propagate to local macOS clipboard
-" Works with iTerm2, Ghostty, Kitty, WezTerm, Alacritty
+" Plain-vim config (fallback editor; nvim is primary). Ergonomics + SSH clipboard.
 
+let mapleader = " "
+syntax on
+filetype plugin indent on
+set encoding=utf-8
+
+" UI
+set number relativenumber       " hybrid line numbers
+set ruler showcmd showmatch
+set cursorline
+set laststatus=2
+set scrolloff=5
+set mouse=a
+
+" Indent — 4-space, expand tabs
+set tabstop=4 shiftwidth=4 expandtab
+set autoindent smartindent
+
+" Search — incremental, highlighted, smartcase
+set incsearch hlsearch
+set ignorecase smartcase
+
+" Editing
+set backspace=indent,eol,start
+set clipboard=unnamed            " local: system clipboard; SSH: OSC52 below
+set nobackup nowritebackup noswapfile
+
+" Folding — indent-based, open by default
+set foldmethod=indent foldlevelstart=99
+
+" OSC 52 clipboard over SSH — yanks propagate to local macOS clipboard.
+" Works with iTerm2, Ghostty, Kitty, WezTerm, Alacritty.
 function! OscYank(text) abort
   let encoded = system('printf ' . shellescape(a:text) . ' | base64 | tr -d "\n"')
   let osc = "\e]52;c;" . encoded . "\a"
