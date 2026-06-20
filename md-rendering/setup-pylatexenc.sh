@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
-# Install pylatexenc via uv — provides the `latex2text` CLI that render-markdown.nvim
-# shells out to for inline LaTeX ($..$, $$..$$) → unicode in the buffer. Idempotent.
+#
+# setup-pylatexenc.sh — install the latex2text CLI (via pylatexenc).
+#
+# What:       `uv tool install pylatexenc`, putting `latex2text` on PATH (~/.local/bin).
+#             render-markdown.nvim shells out to it to convert inline LaTeX
+#             ($..$, $$..$$) into unicode for in-buffer display.
+# Idempotent: exits early if `latex2text` is already on PATH; installs only when absent.
+# Requires:   uv (fail-fast if missing).
+# Usage:      ./setup-pylatexenc.sh   (or via ./run-setups.sh)
+#
 set -euo pipefail
 
 if command -v latex2text >/dev/null 2>&1; then

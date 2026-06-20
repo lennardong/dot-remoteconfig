@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
-# Install mdformat via uv WITH the dollarmath/gfm/frontmatter plugins. dollarmath is the
-# critical one: it teaches mdformat to recognise $..$/$$..$$ math and leave it verbatim.
-# Stock mdformat escapes LaTeX backslashes (\beta -> \\beta) on every format-on-save,
-# silently breaking math rendering. Idempotent — skips if dollarmath is already wired in.
+#
+# setup-mdformat.sh — install mdformat with the math-preserving plugin set.
+#
+# What:       `uv tool install --force mdformat` with the gfm, frontmatter, and
+#             dollarmath plugins. dollarmath is the critical one — it teaches mdformat
+#             to recognise $..$/$$..$$ math and leave it verbatim. Stock mdformat
+#             escapes LaTeX backslashes (\beta -> \\beta) on every format-on-save,
+#             silently breaking math rendering.
+# Idempotent: exits early if `mdformat` already reports the dollarmath plugin; otherwise
+#             reinstalls (--force) to add the plugins to its tool venv.
+# Requires:   uv (fail-fast if missing).
+# Usage:      ./setup-mdformat.sh   (or via ./run-setups.sh)
+#
 set -euo pipefail
 
 if command -v mdformat >/dev/null 2>&1 && mdformat --version 2>&1 | grep -q dollarmath; then
