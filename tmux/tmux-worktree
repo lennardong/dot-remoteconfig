@@ -26,18 +26,27 @@ session=$(basename "$main" | tr . _)
 # window name = branch, falling back to dir basename if detached/empty
 winname() { { [ -n "$2" ] && [ "$2" != "detached" ]; } && echo "$2" || basename "$1"; }
 
+# split a fresh window: left pane = console, right pane = nvim. Focus console.
+# $1 = pane id of the window's initial pane, $2 = worktree path (start dir)
+split_console_nvim() {
+  tmux split-window -h -t "$1" -c "$2" nvim
+  tmux select-pane -t "$1"
+}
+
 # create the session with the root worktree as the first window
 if ! tmux has-session -t="$session" 2>/dev/null; then
   first_path=$(echo "$pairs" | head -1 | cut -f1)
   first_branch=$(echo "$pairs" | head -1 | cut -f2)
-  tmux new-session -ds "$session" -n "$(winname "$first_path" "$first_branch")" -c "$first_path"
+  pane=$(tmux new-session -ds "$session" -n "$(winname "$first_path" "$first_branch")" -c "$first_path" -P -F '#{pane_id}')
+  split_console_nvim "$pane" "$first_path"
 fi
 
 # ensure a window for every worktree (root first), skip ones already open
 while IFS=$'\t' read -r path branch; do
   name=$(winname "$path" "$branch")
-  tmux list-windows -t "$session" -F '#W' | grep -qxF "$name" \
-    || tmux new-window -t "$session" -n "$name" -c "$path"
+  tmux list-windows -t "$session" -F '#W' | grep -qxF "$name" && continue
+  pane=$(tmux new-window -t "$session" -n "$name" -c "$path" -P -F '#{pane_id}')
+  split_console_nvim "$pane" "$path"
 done <<< "$pairs"
 
 tmux switch-client -t "$session" 2>/dev/null || tmux attach -t "$session"
