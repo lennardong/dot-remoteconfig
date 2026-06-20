@@ -16,12 +16,12 @@ if ! infocmp xterm-ghostty &>/dev/null; then
 fi
 
 echo ""
-echo "--- bash ---"
-"$SCRIPT_DIR/bash/install-debian.sh"
+echo "--- terminal ---"
+"$SCRIPT_DIR/terminal/run-setups.sh"
 
 echo ""
 echo "--- tmux ---"
-"$SCRIPT_DIR/tmux/install-debian.sh"
+"$SCRIPT_DIR/tmux/run-setups.sh"
 
 echo ""
 echo "--- nvim ---"

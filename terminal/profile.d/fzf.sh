@@ -2,7 +2,12 @@
 # keybindings: Ctrl-R (history), Ctrl-T (files), Alt-C (cd)
 # **<tab> fuzzy path completion
 export PATH="$HOME/.fzf/bin:$PATH"
-eval "$(fzf --bash)"
+# shell-specific keybinding init: zsh on macOS, bash on Linux
+if [ -n "${ZSH_VERSION:-}" ]; then
+  eval "$(fzf --zsh)"
+else
+  eval "$(fzf --bash)"
+fi
 
 # use fd as file source (fast, respects .gitignore)
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude .git'

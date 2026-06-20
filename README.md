@@ -6,7 +6,7 @@ Terminal ergonomics for remote WSL2/SSH machines and macOS. Designed for Ghostty
 
 | Module | What it does |
 |--------|-------------|
-| **bash/** | Shell snippets sourced from `.bashrc` — fzf config, editor default, SSH login hints |
+| **terminal/** | Shell snippets sourced by bash + zsh — fzf, editor default, SSH hints, `tmux` → session `main` |
 | **nvim/** | Neovim config with lazy.nvim, Dracula theme, LSP, Telescope, Treesitter, Oil |
 | **tmux/** | tmux config — Ctrl-Space prefix, OSC 52 clipboard passthrough, true color, extended keys (CSI u) |
 | **vim/** | Minimal `.vimrc` fallback |
@@ -39,8 +39,8 @@ For nvim on macOS:
 
 ```bash
 # Debian/Ubuntu
-~/.config-remote/bash/install-debian.sh
-~/.config-remote/tmux/install-debian.sh
+~/.config-remote/terminal/run-setups.sh        # installs tools (apt) + wires bash/zsh
+~/.config-remote/tmux/run-setups.sh
 ~/.config-remote/nvim/install-debian.sh
 ~/.config-remote/vim/install-debian.sh
 
@@ -79,8 +79,8 @@ First launch of nvim auto-installs plugins via lazy.nvim. Wait for install to fi
 |--------|----------|----------|
 | `install-debian.sh` | Runs all Debian module scripts below | — |
 | `install-macos.sh` | — | `~/.tmux.conf`, `~/.vimrc` |
-| `bash/install-debian.sh` | fzf, fd, bat, ripgrep, trash-cli | Sources `bash/*.bash` from `.bashrc` |
-| `tmux/install-debian.sh` | tmux | `~/.tmux.conf` |
+| `terminal/run-setups.sh` | fzf, fd, bat, ripgrep, trash-cli (apt; skipped off Debian) | Wires `terminal/profile.d/*.sh` into `.bashrc` + `.zshrc` |
+| `tmux/run-setups.sh` | tmux (apt; skipped off Debian) | `~/.tmux.conf`, +x on `tmux-worktree` |
 | `nvim/install-debian.sh` | neovim, marksman, build-essential | `~/.config/nvim/init.lua`, `~/.config/nvim/lua/` |
 | `nvim/install-osx.sh` | neovim, basedpyright, ruff, marksman | `~/.config/nvim/init.lua`, `~/.config/nvim/lua/` |
 | `vim/install-debian.sh` | vim | `~/.vimrc` |
@@ -93,11 +93,20 @@ All symlink scripts back up existing files to `*.bak` before overwriting.
 ~/.config-remote/
   install-debian.sh       # top-level Debian/Ubuntu installer
   install-macos.sh        # top-level macOS installer
-  bash/
-    install-debian.sh     # installs fzf, fd, bat, rg; sources *.bash from .bashrc
-    editor.bash           # EDITOR=nvim
-    fzf.bash              # fzf keybindings, fd integration, bat preview
-    ssh-hints.bash        # tmux session hints on SSH login
+  terminal/
+    run-setups.sh         # orchestrator: runs every setup-*.sh (idempotent)
+    setup-fzf.sh          # apt install fzf
+    setup-fd.sh           # apt fd-find + symlink fdfind -> fd
+    setup-bat.sh          # apt bat + symlink batcat -> bat
+    setup-trash.sh        # apt trash-cli
+    setup-ripgrep.sh      # apt ripgrep
+    setup-shell.sh        # wires profile.d/*.sh into .bashrc + .zshrc
+    profile.d/            # sourced at shell startup (bash + zsh)
+      editor.sh           # EDITOR=nvim
+      fzf.sh              # fzf keybindings (bash/zsh), fd integration, bat preview
+      trash.sh            # rm -> trash-put, 90-day auto-purge
+      ssh-hints.sh        # tmux session hints on SSH login
+      tmux-session.sh     # bare `tmux` -> attach/create session `main`
   nvim/
     install-debian.sh     # installs neovim, symlinks config
     install-osx.sh        # installs neovim + LSPs via brew/uv, symlinks config
@@ -108,9 +117,12 @@ All symlink scripts back up existing files to `*.bak` before overwriting.
         vscode.lua        # VSCode-specific overrides
       plugins/            # lazy.nvim plugin specs
   tmux/
-    install-debian.sh     # installs tmux, symlinks tmux.conf
+    run-setups.sh         # orchestrator: runs every setup-*.sh (idempotent)
+    setup-debian.sh       # apt install tmux
+    setup-tmux.sh         # symlink ~/.tmux.conf -> tmux.conf
+    setup-worktreesession.sh # chmod +x tmux-worktree
     tmux.conf             # Ctrl-Space prefix, OSC 52, true color, extended keys, mouse
-    tmux-worktree         # fuzzy worktree switcher for current repo (prefix + W)
+    tmux-worktree         # one session, one window per worktree (prefix + S)
   vim/
     install-debian.sh     # installs vim, symlinks vimrc
     vimrc                 # minimal fallback config

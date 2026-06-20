@@ -24,11 +24,16 @@ symlink_file() {
 
 echo ""
 echo "--- tmux ---"
-symlink_file "$SCRIPT_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+"$SCRIPT_DIR/tmux/run-setups.sh"
 
 echo ""
 echo "--- vim ---"
 symlink_file "$SCRIPT_DIR/vim/vimrc" "$HOME/.vimrc"
+
+echo ""
+echo "--- terminal ---"
+# tools come from brew (Brewfile); this just wires the shell snippets into .zshrc
+"$SCRIPT_DIR/terminal/run-setups.sh"
 
 echo ""
 echo "=== done ==="
