@@ -14,7 +14,7 @@ return {
 
     local parsers = {
       "python", "lua", "bash", "toml", "yaml", "json",
-      "dockerfile", "markdown", "markdown_inline",
+      "dockerfile", "markdown", "markdown_inline", "latex",
     }
     ts.install(parsers)
 
