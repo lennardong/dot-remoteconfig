@@ -1,11 +1,11 @@
 -- Match tmux's inactive pane background across all splits.
 --
--- tmux paints unfocused panes 'bg=colour235' (tmux.conf), but nvim draws its own
+-- tmux paints unfocused panes 'bg=colour233' (tmux.conf), but nvim draws its own
 -- Normal bg over the whole pane so tmux can't show through. We listen for tmux
 -- focus events (focus-events on) and repaint nvim ourselves: on focus loss every
--- split goes to colour235, on focus gain the colorscheme bg is restored.
+-- split goes to colour233, on focus gain the colorscheme bg is restored.
 
-local INACTIVE_BG = "#262626" -- xterm colour235, matches tmux window-style
+local INACTIVE_BG = "#121212" -- xterm colour233, matches tmux window-style
 
 -- Colorscheme's real fg/bg, refreshed on theme change so the <leader>tt toggle
 -- keeps restoring the right colours. link=false resolves NormalNC's link.
