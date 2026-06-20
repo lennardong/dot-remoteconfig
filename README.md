@@ -110,7 +110,7 @@ All symlink scripts back up existing files to `*.bak` before overwriting.
   tmux/
     install-debian.sh     # installs tmux, symlinks tmux.conf
     tmux.conf             # Ctrl-Space prefix, OSC 52, true color, extended keys, mouse
-    tmux-sessionizer      # fuzzy repo picker (prefix + f)
+    tmux-worktree         # fuzzy worktree switcher for current repo (prefix + W)
   vim/
     install-debian.sh     # installs vim, symlinks vimrc
     vimrc                 # minimal fallback config

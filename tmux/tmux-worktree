@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Switch between worktrees of the CURRENT repo. No hardcoded paths — asks git.
+# One tmux session per worktree, so nvim/shell/lazygit all bind to its cwd.
+set -euo pipefail
+
+list=$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2}')
+[ -z "$list" ] && { tmux display-message "not in a git repo"; exit 0; }
+
+selected=$(echo "$list" | fzf) || exit 0
+[ -z "$selected" ] && exit 0
+
+# session name from the worktree dir; tr . _ since tmux disallows dots in names
+name=$(basename "$selected" | tr . _)
+tmux has-session -t="$name" 2>/dev/null || tmux new-session -ds "$name" -c "$selected"
+tmux switch-client -t "$name"
