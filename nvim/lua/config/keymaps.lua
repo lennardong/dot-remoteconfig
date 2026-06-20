@@ -7,8 +7,17 @@ vim.keymap.set("n", "<C-w>e", "<C-w>=", { desc = "Equalize splits" })
 vim.keymap.set("n", "<C-w>\\", "<cmd>vsplit<cr>", { desc = "Vertical split" })
 vim.keymap.set("n", "<C-w>-", "<cmd>split<cr>", { desc = "Horizontal split" })
 
--- Sessionizer — switch tmux session to another repo
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config-remote/tmux/tmux-sessionizer<CR>")
+-- Split navigation — terminal only (VSCode owns its own). Native nvim window nav,
+-- no tmux crossover: at an edge it stays put. tmux panes use prefix-q numbers.
+if not vim.g.vscode then
+  vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
+  vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower split" })
+  vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper split" })
+  vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
+end
+
+-- Worktree switcher — fuzzy-pick a worktree of the current repo (new tmux session)
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config-remote/tmux/tmux-worktree<CR>")
 
 -- Theme toggle dark/light
 vim.keymap.set("n", "<leader>tt", function()
