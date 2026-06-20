@@ -58,4 +58,5 @@ require("lazy").setup({
   not vim.g.vscode and { import = "plugins.render-markdown" } or nil,
   not vim.g.vscode and { import = "plugins.autopairs" }        or nil,
   not vim.g.vscode and { import = "plugins.tmux-navigator" }   or nil,
+  not vim.g.vscode and { import = "plugins.diffview" }         or nil,
 })

@@ -8,6 +8,7 @@ return {
       { "<leader>r", group = "refactor" },
       { "<leader>d", group = "document" },
       { "<leader>f", group = "find" },
+      { "<leader>g", group = "git" },
       { "<leader>v", group = "view" },
       { "<leader>w", group = "workspace" },
       { "<leader>y", group = "yank" },
