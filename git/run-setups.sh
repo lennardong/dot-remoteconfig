@@ -3,7 +3,7 @@
 set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-for s in setup-lazygit setup-delta setup-difftool-fallback; do
+for s in setup-lazygit setup-delta setup-difftool-fallback setup-globalignores; do
   echo "=== ${s} ==="
   "${here}/${s}.sh"
 done
