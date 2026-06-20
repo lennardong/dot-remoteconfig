@@ -31,6 +31,17 @@ local function apply_split_highlights()
   if scheme:find("github_light") then
     vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#444444", bg = "#b0b0b0" })
   end
+  -- Diff highlights: faint bg only (no fg) so treesitter syntax shows through a
+  -- big added block instead of rendering as one flat slab of green.
+  -- faint line (DiffChange) + loud word (DiffText, stronger bg + bold) so a
+  -- one-word change pops instead of blending into the changed line.
+  local diff = scheme:find("github_light")
+    and { add = "#d5f5e0", change = "#e2ecf7", text = "#8fdcab", delete = "#f7dada" }
+    or  { add = "#1b3326", change = "#2a3b55", text = "#356b4d", delete = "#3a2024" }
+  vim.api.nvim_set_hl(0, "DiffAdd",    { bg = diff.add })
+  vim.api.nvim_set_hl(0, "DiffChange", { bg = diff.change })
+  vim.api.nvim_set_hl(0, "DiffText",   { bg = diff.text, bold = true })
+  vim.api.nvim_set_hl(0, "DiffDelete", { bg = diff.delete })
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_split_highlights })
