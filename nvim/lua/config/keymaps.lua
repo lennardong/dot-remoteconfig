@@ -16,8 +16,8 @@ if not vim.g.vscode then
   vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
 end
 
--- Worktree switcher — fuzzy-pick a worktree of the current repo (new tmux session)
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config-remote/tmux/tmux-worktree<CR>")
+-- Worktree workspace — open current repo as one session, one window per worktree
+vim.keymap.set("n", "<C-f>", "<cmd>silent !~/.config-remote/tmux/tmux-worktree<CR>")
 
 -- Theme toggle dark/light
 vim.keymap.set("n", "<leader>tt", function()

@@ -1,15 +1,43 @@
 #!/usr/bin/env bash
-# Switch between worktrees of the CURRENT repo. No hardcoded paths — asks git.
-# One tmux session per worktree, so nvim/shell/lazygit all bind to its cwd.
+# Open the CURRENT repo as one tmux session, one window per worktree.
+# session = repo dir name, window = branch. Root worktree first (git's order).
+# Idempotent: adds only missing windows.
 set -euo pipefail
 
-list=$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2}')
-[ -z "$list" ] && { tmux display-message "not in a git repo"; exit 0; }
+# $1 = dir to resolve the repo from. tmux run-shell does NOT inherit the pane's
+# cwd (it uses the server's), so the prefix-W bind passes #{pane_current_path}.
+# nvim's :! already runs in its own cwd, so it can call with no arg.
+[ -n "${1:-}" ] && cd "$1"
 
-selected=$(echo "$list" | fzf) || exit 0
-[ -z "$selected" ] && exit 0
+# parse path<TAB>branch per worktree (git lists the root worktree first)
+pairs=$(git worktree list --porcelain 2>/dev/null | awk '
+  /^worktree /{ path=$2; branch="" }
+  /^branch /{ branch=$2; sub("refs/heads/","",branch) }
+  /^detached$/{ branch="detached" }
+  /^$/{ if (path!="") print path"\t"branch; path="" }
+  END{ if (path!="") print path"\t"branch }
+')
+[ -z "$pairs" ] && { tmux display-message "not in a git repo"; exit 0; }
 
-# session name from the worktree dir; tr . _ since tmux disallows dots in names
-name=$(basename "$selected" | tr . _)
-tmux has-session -t="$name" 2>/dev/null || tmux new-session -ds "$name" -c "$selected"
-tmux switch-client -t "$name"
+# session name = root worktree dir; tmux disallows dots in session names
+main=$(echo "$pairs" | head -1 | cut -f1)
+session=$(basename "$main" | tr . _)
+
+# window name = branch, falling back to dir basename if detached/empty
+winname() { { [ -n "$2" ] && [ "$2" != "detached" ]; } && echo "$2" || basename "$1"; }
+
+# create the session with the root worktree as the first window
+if ! tmux has-session -t="$session" 2>/dev/null; then
+  first_path=$(echo "$pairs" | head -1 | cut -f1)
+  first_branch=$(echo "$pairs" | head -1 | cut -f2)
+  tmux new-session -ds "$session" -n "$(winname "$first_path" "$first_branch")" -c "$first_path"
+fi
+
+# ensure a window for every worktree (root first), skip ones already open
+while IFS=$'\t' read -r path branch; do
+  name=$(winname "$path" "$branch")
+  tmux list-windows -t "$session" -F '#W' | grep -qxF "$name" \
+    || tmux new-window -t "$session" -n "$name" -c "$path"
+done <<< "$pairs"
+
+tmux switch-client -t "$session" 2>/dev/null || tmux attach -t "$session"
