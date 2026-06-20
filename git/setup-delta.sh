@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 # Install git-delta + wire it for side-by-side diffs (git CLI + lazygit). Idempotent.
-# lazygit binary itself: see setup-lazygit.sh.
+# lazygit binary itself: see setup-lazygit.sh. Cross-platform: Debian + macOS.
 set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-# --- delta: side-by-side pager (Ubuntu/Debian apt) ---
+# --- delta: side-by-side pager (apt on Debian, brew on macOS) ---
 if ! command -v delta >/dev/null 2>&1; then
   echo "installing git-delta..."
-  sudo apt-get update -qq
-  sudo apt-get install -y git-delta
+  case "$(detect_os)" in
+    debian)
+      sudo apt-get update -qq
+      sudo apt-get install -y git-delta
+      ;;
+    macos)
+      require_brew
+      brew install git-delta
+      ;;
+  esac
 else
   echo "git-delta present: $(delta --version)"
 fi
