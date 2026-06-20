@@ -1,5 +1,9 @@
 -- Keymaps — shared across VSCode and terminal
 
+-- Center the cursor after search-repeat (zz), unfold if needed (zv)
+vim.keymap.set("n", "n", "nzzzv", { desc = "Search next (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Search prev (centered)" })
+
 -- Equalize splits
 vim.keymap.set("n", "<C-w>e", "<C-w>=", { desc = "Equalize splits" })
 

@@ -43,7 +43,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- Shared: load in both VSCode and terminal
-  { import = "plugins.sneak" },
   { import = "plugins.surround" },
 
   -- Terminal-only: gated so VSCode mode loads nothing extra

@@ -15,7 +15,6 @@
   "telescope.nvim": { "branch": "master", "commit": "7d324792b7943e4aa16ad007212e6acc6f9fe335" },
   "tint.nvim": { "branch": "master", "commit": "586e87f00c8b0f5e857cefe10839e41f3e8c6d01" },
   "vim-repeat": { "branch": "master", "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
-  "vim-sneak": { "branch": "master", "commit": "feea86adcfbf8e6b5e71fdd5f4f5736fd8819fdb" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vim-tmux-navigator": { "branch": "master", "commit": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
