@@ -2,7 +2,8 @@
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = false
 vim.opt.mouse = ""               -- disable mouse — keyboard-only, mirrors tmux mouse off
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.scrolloff = 8
@@ -27,7 +28,11 @@ vim.opt.fillchars:append({ vert = "│", horiz = "─", horizup = "┴", horizdo
 local function apply_split_highlights()
   local scheme = vim.g.colors_name or ""
   vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#888888", bold = true })
-  vim.api.nvim_set_hl(0, "CursorLine",   { bg = scheme:find("github_light") and "#c8f0d8" or "#1e3a2a" })
+  -- Active line: highlighter yellow, faked translucency (low-luminance tint lets
+  -- text show through). Yellow stays unique against the green diff semantics.
+  vim.api.nvim_set_hl(0, "CursorLine",   { bg = scheme:find("github_light") and "#f6efbe" or "#33300d" })
+  -- Active-window tell: current line number glows highlighter yellow.
+  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffe600", bold = true })
   if scheme:find("github_light") then
     vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#444444", bg = "#b0b0b0" })
   end
@@ -46,6 +51,17 @@ end
 
 vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_split_highlights })
 apply_split_highlights()
+
+-- Active-only cursorline: the highlighted line shows in the focused split only,
+-- so the active window is obvious at a glance. cursorline=true (theme.lua) is the
+-- default; these autocmds turn it off everywhere but the window you're in.
+local active_cl = vim.api.nvim_create_augroup("ActiveCursorLine", { clear = true })
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  group = active_cl, callback = function() vim.opt_local.cursorline = true end,
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+  group = active_cl, callback = function() vim.opt_local.cursorline = false end,
+})
 
 -- Diagnostics: show virtual line only for current line (nvim 0.11+)
 vim.diagnostic.config({ virtual_lines = { current_line = true } })

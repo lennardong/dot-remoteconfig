@@ -1,8 +1,11 @@
 -- Theme: toggle dark/light with <leader>tt
 -- Comment/uncomment the colorscheme line below to set startup default
 local function apply_cursor()
-  vim.api.nvim_set_hl(0, "Cursor",   { fg = "#ffffff", bg = "#00e676" })
-  vim.api.nvim_set_hl(0, "CursorIM", { fg = "#ffffff", bg = "#00e676" })
+  -- Highlighter yellow, strong/opaque block. Dark fg so the glyph under the
+  -- block stays readable on bright yellow. Yellow (not green) to stay unique
+  -- against the green diff/diffview semantics.
+  vim.api.nvim_set_hl(0, "Cursor",   { fg = "#000000", bg = "#ffe600" })
+  vim.api.nvim_set_hl(0, "CursorIM", { fg = "#000000", bg = "#ffe600" })
   vim.opt.guicursor = "n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr:hor20-Cursor"
 end
 

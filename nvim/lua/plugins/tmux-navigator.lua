@@ -3,6 +3,10 @@
 -- nvim-only split nav when outside tmux. tmux side: is_vim check in tmux.conf.
 return {
   "christoomey/vim-tmux-navigator",
+  -- Stop at edge splits instead of wrapping to the opposite side.
+  init = function()
+    vim.g.tmux_navigator_no_wrap = 1
+  end,
   cmd = {
     "TmuxNavigateLeft", "TmuxNavigateDown",
     "TmuxNavigateUp", "TmuxNavigateRight",

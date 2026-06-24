@@ -29,14 +29,22 @@ vim.keymap.set("n", "<leader>tt", function()
 end, { desc = "Toggle dark/light theme" })
 
 -- Yank selection with file path + line numbers (for pasting into Claude Code)
-vim.keymap.set("v", "<leader>yp", function()
-  local start_line = vim.fn.line("v")
-  local end_line = vim.fn.line(".")
-  if start_line > end_line then start_line, end_line = end_line, start_line end
+local function yank_with_path(start_line, end_line)
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-  local path = vim.fn.expand("%:.")  -- relative path
+  local path = vim.fn.expand("%:.")
   local header = path .. ":" .. start_line .. "-" .. end_line
-  local text = header .. "\n" .. table.concat(lines, "\n")
-  vim.fn.setreg("+", text)
+  vim.fn.setreg("+", header .. "\n" .. table.concat(lines, "\n"))
   vim.notify("Yanked with path: " .. header)
+end
+
+vim.keymap.set("v", "<leader>yp", function()
+  local s = vim.fn.line("v")
+  local e = vim.fn.line(".")
+  if s > e then s, e = e, s end
+  yank_with_path(s, e)
 end, { desc = "Yank selection with file path" })
+
+-- :12,25YP — range form for use without visual selection
+vim.api.nvim_create_user_command("YP", function(opts)
+  yank_with_path(opts.line1, opts.line2)
+end, { range = true, desc = "Yank range with file path" })
