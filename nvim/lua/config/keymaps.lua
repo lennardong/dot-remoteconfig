@@ -9,8 +9,8 @@ vim.keymap.set("n", "<C-w>e", "<C-w>=", { desc = "Equalize splits" })
 
 -- Splits — symmetric with tmux prefix \/-
 vim.keymap.set("n", "<C-w>\\", "<cmd>vsplit<cr>", { desc = "Vertical split" })
-vim.keymap.set("n", "<C-w>-", "<cmd>split<cr>", { desc = "Horizontal split" })
-vim.keymap.set("n", "<C-w>x", "<cmd>close<cr>", { desc = "Close split" })
+vim.keymap.set("n", "<C-w>-",  "<cmd>split<cr>",  { desc = "Horizontal split" })
+vim.keymap.set("n", "<C-w>x",  "<C-w>c",          { desc = "Close split" })
 
 -- C-h/j/k/l split+pane navigation: owned by vim-tmux-navigator (plugins/tmux-navigator.lua),
 -- which crosses the nvim/tmux boundary. tmux side: is_vim check in tmux.conf.

@@ -28,9 +28,10 @@ vim.opt.fillchars:append({ vert = "│", horiz = "─", horizup = "┴", horizdo
 local function apply_split_highlights()
   local scheme = vim.g.colors_name or ""
   vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#888888", bold = true })
-  -- Active line: highlighter yellow, faked translucency (low-luminance tint lets
-  -- text show through). Yellow stays unique against the green diff semantics.
-  vim.api.nvim_set_hl(0, "CursorLine",   { bg = scheme:find("github_light") and "#f6efbe" or "#33300d" })
+  -- Active line: dark mode = low-luminance yellow tint (text shows through). Light
+  -- mode = neutral grey, NOT yellow — a yellow tint would swallow the yellow Cursor
+  -- block (#ffe600), leaving the cursor invisible on the active line.
+  vim.api.nvim_set_hl(0, "CursorLine",   { bg = scheme:find("github_light") and "#e8e8e8" or "#33300d" })
   -- Active-window tell: current line number glows highlighter yellow.
   vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffe600", bold = true })
   if scheme:find("github_light") then
